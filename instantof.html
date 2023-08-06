@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /**
+         * @param {any} obj
+         * @param {any} classFunction
+         * @return {boolean}
+         * 
+         * 判断是否是类的实例对象的情况有：
+         * 1. 没有原型 -false
+         * 2. 不是类的实例对象 -false
+         * 3. 是类的实例对象   -true
+         * 4. 是类的实例的实例的..的对象 -true
+        //  */
+        // var checkIfInstanceOf = function (obj, classFunction) {
+        //     if (
+        //         obj === null ||
+        //         obj === undefined ||
+        //         classFunction === null ||
+        //         classFunction === undefined
+        //     ) {
+        //         return false
+        //     }
+        //     // 实例原型存在 且 实例的原型 不等于 对象的原型
+        //     // 判断obj原型链上的所有隐式原型，是否等于classFunction.prototype
+        //     // 如果相等则返回true，不等则让obj = obj.__proto__，继续判断原型的原型
+        //     while (obj.__proto__ && obj.__proto__ != classFunction.prototype)
+        //         obj = obj.__proto__;
+        //     return obj.__proto__ === classFunction.prototype;
+        // }
+
+        // function person (name, age) {
+        //     this.name = name
+        //     this.age = age
+        // }
+        // var o = new person('jack', 23)
+        // //o是对象 person是构造函数 用构造函数来构造实例
+
+        // console.log(checkIfInstanceOf(o, person))
+        // console.log(o instanceof person)
+        data = [
+                {
+                    "id": 1,
+                    "name": "广东省",
+                    "parentId": -1,
+                    "sort": 0,
+                    "subDeptList": [
+                        {
+                            "id": 3,
+                            "name": "佛山市",
+                            "parentId": 1,
+                            "sort": 3,
+                            "subDeptList": [
+                                {
+                                    "id": 105,
+                                    "name": "禅城区",
+                                    "parentId": 3,
+                                    "sort": 2,
+                                    "subDeptList": []
+                                },
+                                {
+                                    "id": 115,
+                                    "name": "高明区",
+                                    "parentId": 3,
+                                    "sort": 1,
+                                    "subDeptList": []
+                                },
+                                {
+                                    "id": 116,
+                                    "name": "三水区",
+                                    "parentId": 3,
+                                    "sort": 3,
+                                    "subDeptList": []
+                                },
+                                {
+                                    "id": 143,
+                                    "name": "南海区",
+                                    "parentId": 3,
+                                    "sort": 0,
+                                    "subDeptList": []
+                                }
+                            ]
+                        },
+                        {
+                            "id": 90,
+                            "name": "广州市",
+                            "parentId": 1,
+                            "sort": 0,
+                            "subDeptList": [
+                                {
+                                    "id": 106,
+                                    "name": "天河区",
+                                    "parentId": 90,
+                                    "sort": 1,
+                                    "subDeptList": []
+                                },
+                                {
+                                    "id": 113,
+                                    "name": "海珠区",
+                                    "parentId": 90,
+                                    "sort": 2,
+                                    "subDeptList": []
+                                },
+                                {
+                                    "id": 114,
+                                    "name": "增城区",
+                                    "parentId": 90,
+                                    "sort": 3,
+                                    "subDeptList": []
+                                }
+                            ]
+                        },
+                        {
+                            "id": 109,
+                            "name": "清远市",
+                            "parentId": 1,
+                            "sort": 1,
+                            "subDeptList": [
+                                {
+                                    "id": 110,
+                                    "name": "清城区",
+                                    "parentId": 109,
+                                    "sort": 0,
+                                    "subDeptList": []
+                                },
+                                {
+                                    "id": 119,
+                                    "name": "连州县",
+                                    "parentId": 109,
+                                    "sort": 1,
+                                    "subDeptList": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+            let arr = [];
+            for (let i = 0; i < data.length; i++) {
+                const tmparr = {
+                    id: data[i].id,
+                    name: data[i].name
+                }
+                tmparr.children = [];
+                if (data[i].subDeptList.length != 0) {
+                    fun(data[i].subDeptList, tmparr);
+                }
+                arr.push(tmparr);
+            }
+
+            function fun (obj, arr) {
+                for (let i = 0; i < obj.length; i++) {
+                    const tmparr = {
+                        id: obj[i].id,
+                        name: obj[i].name
+                    }
+                    tmparr.children = []
+                    if (obj[i].subDeptList.length != 0) {
+                        fun(obj[i].subDeptList, tmparr)
+                    }
+                    // console.log(tmparr);
+                    arr.children.push(tmparr)
+                }
+
+            }
+
+            console.log(arr);
+    </script>
+</body>
+
+</html>
